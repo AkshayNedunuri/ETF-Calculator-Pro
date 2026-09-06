@@ -39,7 +39,12 @@ export default function Navbar() {
     // Local user fallback (Full-stack developer touch)
     const [localUser, setLocalUser] = useState<{name: string, email: string} | null>(null);
     useEffect(() => {
-        if (status !== 'authenticated' && typeof window !== 'undefined') {
+        if (typeof window === 'undefined') return;
+        if (status === 'authenticated') {
+            // Real session active — clear any stale local user so logout works correctly
+            localStorage.removeItem('wealthCalc_localUser');
+            setLocalUser(null);
+        } else if (status === 'unauthenticated') {
             const saved = localStorage.getItem('wealthCalc_localUser');
             if (saved) setLocalUser(JSON.parse(saved));
         }
@@ -162,17 +167,18 @@ export default function Navbar() {
 
                                                 <button
                                                     onClick={() => {
-                                                        if (session) {
+                                                        localStorage.removeItem('wealthCalc_localUser');
+                                                        if (status === 'authenticated') {
                                                             signOut({ callbackUrl: '/' });
                                                         } else {
-                                                            localStorage.removeItem('wealthCalc_localUser');
-                                                            window.location.reload();
+                                                            setLocalUser(null);
+                                                            window.location.href = '/';
                                                         }
                                                     }}
                                                     className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 rounded-2xl font-black hover:bg-red-100 dark:hover:bg-red-900/20 transition-all text-sm uppercase tracking-widest"
                                                 >
                                                     <LogOut className="w-4 h-4" />
-                                                    {session ? 'Logout' : 'Exit Local Mode'}
+                                                    Logout
                                                 </button>
                                             </div>
                                         ) : (
@@ -206,7 +212,7 @@ export default function Navbar() {
                         
                         {isLoggedIn && (
                             <div className="flex items-center gap-3 pl-2">
-                                {session.user?.image ? (
+                                {session?.user?.image ? (
                                     <Image
                                         src={session.user.image}
                                         alt={session.user.name ?? 'User'}
@@ -216,7 +222,7 @@ export default function Navbar() {
                                     />
                                 ) : (
                                     <div className="w-9 h-9 rounded-full bg-blue-600/10 flex items-center justify-center text-blue-600 font-black text-xs">
-                                        {session.user?.name?.charAt(0)?.toUpperCase()}
+                                        {userName.charAt(0).toUpperCase()}
                                     </div>
                                 )}
                             </div>
