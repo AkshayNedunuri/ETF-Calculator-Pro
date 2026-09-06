@@ -28,11 +28,18 @@ export default function LoginPage() {
             });
 
             if (res?.error) {
-                setError(res.error === "CredentialsSignin" ? "Invalid email or password." : res.error);
-                showToast("Invalid credentials", "error");
-            } else {
-                showToast("Welcome back!");
+                const msg =
+                    res.error === "CredentialsSignin"
+                        ? "Incorrect email or password. Please try again."
+                        : res.error; // shows "Service unavailable..." for DB errors
+                setError(msg);
+                showToast(msg, "error");
+            } else if (res?.ok) {
+                showToast("Welcome back!", "success");
                 window.location.href = "/dashboard";
+            } else {
+                setError("Login failed. Please try again.");
+                showToast("Login failed", "error");
             }
         } catch (err) {
             setError("Something went wrong. Please try again.");

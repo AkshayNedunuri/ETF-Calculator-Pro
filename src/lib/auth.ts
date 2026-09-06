@@ -19,36 +19,45 @@ export const authOptions: NextAuthOptions = {
             },
             async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) {
-                    throw new Error("Email and password are required");
+                    return null;
                 }
 
+                let client;
                 try {
-                    const client = await clientPromise;
-                    const db = client.db();
-
-                    // Find user by email
-                    const user = await db.collection("users").findOne({ email: credentials.email });
-
-                    if (!user) {
-                        throw new Error("No user found with this email");
-                    }
-
-                    // Verify password
-                    const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
-
-                    if (!isPasswordCorrect) {
-                        throw new Error("Invalid password");
-                    }
-
-                    return { 
-                        id: user._id.toString(), 
-                        name: user.name, 
-                        email: user.email 
-                    };
-                } catch (error: any) {
-                    console.error("Auth error:", error);
-                    throw new Error(error.message || "Authentication failed");
+                    client = await clientPromise;
+                } catch (dbError: any) {
+                    console.error("Database connection error:", dbError);
+                    throw new Error("Service unavailable. Please try again later.");
                 }
+
+                const db = client.db();
+
+                // Find user by email
+                const user = await db.collection("users").findOne({ email: credentials.email });
+
+                if (!user) {
+                    // Return null so NextAuth shows CredentialsSignin error
+                    return null;
+                }
+
+                if (!user.password) {
+                    // Account exists but was created via OAuth (no password)
+                    return null;
+                }
+
+                // Verify password
+                const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
+
+                if (!isPasswordCorrect) {
+                    // Return null — NextAuth maps this to CredentialsSignin error
+                    return null;
+                }
+
+                return { 
+                    id: user._id.toString(), 
+                    name: user.name, 
+                    email: user.email 
+                };
             }
         })
     ],
