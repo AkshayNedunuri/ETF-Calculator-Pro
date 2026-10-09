@@ -51,8 +51,12 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`✅ Backend server running on port ${PORT}`);
-  console.log(`📊 API Base: http://localhost:${PORT}`);
-  console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL || "http://localhost:3000"}`);
-});
+if (process.env.NODE_ENV !== "test" && !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`✅ Backend server running on port ${PORT}`);
+    console.log(`📊 API Base: http://localhost:${PORT}`);
+    console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL || "http://localhost:3000"}`);
+  });
+}
+
+export default app;

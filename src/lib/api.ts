@@ -1,4 +1,18 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const getBackendUrl = (): string => {
+  // 1. Bound internal service URL (injected by Vercel Services runtime)
+  if (typeof process !== 'undefined' && process.env?.BACKEND_URL) {
+    return process.env.BACKEND_URL.replace(/\/$/, '');
+  }
+  // 2. Client-side public URL
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, '');
+  }
+  // 3. In the browser, use relative path if routed on same domain via Vercel rewrites
+  if (typeof window !== 'undefined') {
+    return '';
+  }
+  return 'http://localhost:5000';
+};
 
 export interface ApiResponse<T = any> {
   data?: T;
@@ -11,7 +25,7 @@ export const api = {
   // Health check
   async checkHealth() {
     try {
-      const res = await fetch(`${API_URL}/api/health`);
+      const res = await fetch(`${getBackendUrl()}/api/health`);
       return await res.json();
     } catch (e: any) {
       return { status: 'disconnected', advice: 'Could not connect to backend server' };
@@ -35,7 +49,7 @@ export const api = {
     }
 
     try {
-      const res = await fetch(`${API_URL}/api/auth/signup`, {
+      const res = await fetch(`${getBackendUrl()}/api/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -49,7 +63,7 @@ export const api = {
 
   async signin(data: { email: string; password?: string }) {
     try {
-      const res = await fetch(`${API_URL}/api/auth/signin`, {
+      const res = await fetch(`${getBackendUrl()}/api/auth/signin`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -63,7 +77,7 @@ export const api = {
 
   // Password reset
   async forgotPassword(email: string) {
-    const res = await fetch(`${API_URL}/api/forgot-password`, {
+    const res = await fetch(`${getBackendUrl()}/api/forgot-password`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
@@ -73,7 +87,7 @@ export const api = {
   },
 
   async resetPassword(token: string, password: string) {
-    const res = await fetch(`${API_URL}/api/reset-password`, {
+    const res = await fetch(`${getBackendUrl()}/api/reset-password`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token, password }),
@@ -93,7 +107,7 @@ export const api = {
       }
     }
 
-    const res = await fetch(`${API_URL}/api/calculations`, { headers });
+    const res = await fetch(`${getBackendUrl()}/api/calculations`, { headers });
     const json = await res.json();
     return { ok: res.ok, status: res.status, data: json };
   },
@@ -108,7 +122,7 @@ export const api = {
       }
     }
 
-    const res = await fetch(`${API_URL}/api/calculations`, {
+    const res = await fetch(`${getBackendUrl()}/api/calculations`, {
       method: 'POST',
       headers,
       body: JSON.stringify(calculation),
@@ -127,7 +141,7 @@ export const api = {
       }
     }
 
-    const res = await fetch(`${API_URL}/api/calculations/${id}`, {
+    const res = await fetch(`${getBackendUrl()}/api/calculations/${id}`, {
       method: 'DELETE',
       headers,
     });
