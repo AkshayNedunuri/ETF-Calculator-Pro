@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { Mail, Lock, LogIn, Chrome, Eye, EyeOff, ArrowLeft, ShieldCheck, Sparkles, CheckCircle2, AlertCircle, Database } from "lucide-react";
 import { useToast } from "@/components/UI/Toast";
 
-export default function LoginPage() {
+function LoginForm() {
     const searchParams = useSearchParams();
     const registered = searchParams.get("registered");
     const paramEmail = searchParams.get("email");
@@ -270,5 +270,20 @@ export default function LoginPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <React.Suspense fallback={
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center font-inter">
+                <div className="flex items-center gap-3 text-blue-600 font-bold">
+                    <span className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></span>
+                    Loading WealthCalc...
+                </div>
+            </div>
+        }>
+            <LoginForm />
+        </React.Suspense>
     );
 }
