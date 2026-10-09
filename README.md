@@ -5,7 +5,7 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3-38B2AC?style=for-the-badge&logo=tailwind-css)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb)
 ![NextAuth.js](https://img.shields.io/badge/NextAuth.js-4.24-purple?style=for-the-badge&logo=next.js)
-[![Vercel Production](https://img.shields.io/badge/Vercel-Production%20Live-black?style=for-the-badge&logo=vercel)](https://etf-calculator-n6b3.vercel.app)
+![License](https://img.shields.io/badge/License-Not_Specified-gray?style=for-the-badge)
 
 A comprehensive, modern, and responsive multi-asset investment, debt, and wealth growth calculator built specifically for Indian retail investors and financial planners. Designed with Next.js 14 App Router, Tailwind CSS, Recharts, and MongoDB Atlas.
 
@@ -28,8 +28,7 @@ Traditional investment calculators are fragmented—investors often use one webs
 
 ## 3. Live Demo
 
-* **Live Application URL**: [https://etf-calculator-n6b3.vercel.app](https://etf-calculator-n6b3.vercel.app)
-* **Latest Production Deployment**: [https://etf-calculator-n6b3-kcb3ip6tz-akshay-nedunuri17s-projects.vercel.app](https://etf-calculator-n6b3-kcb3ip6tz-akshay-nedunuri17s-projects.vercel.app)
+*(No live deployment URL is configured in the repository configuration. See the [Deployment](#19-deployment) section to host your own instance on Vercel or Netlify.)*
 
 ---
 
@@ -375,15 +374,15 @@ The application interface is fully responsive across desktop, tablet, and mobile
 ### Deploying to Vercel
 
 1. Push your repository to GitHub.
-2. Log into [Vercel](https://vercel.com/) and click **New Project** (or navigate to existing project `etf-calculator-n6b3`).
+2. Log into [Vercel](https://vercel.com/) and click **New Project**.
 3. Import the `ETF-calculator` repository.
 4. Add the required Environment Variables in Vercel Project Settings:
-   - `MONGODB_URI` (your MongoDB Atlas connection string)
-   - `NEXTAUTH_SECRET` (generate using `openssl rand -base64 32`)
-   - `NEXTAUTH_URL` (`https://etf-calculator-n6b3.vercel.app`)
+   - `MONGODB_URI`
+   - `NEXTAUTH_SECRET`
+   - `NEXTAUTH_URL` (set to your Vercel deployment domain `https://your-app.vercel.app`)
    - `GOOGLE_CLIENT_ID`
    - `GOOGLE_CLIENT_SECRET`
-5. Click **Deploy**. Production builds deploy automatically upon pushing to the `main` branch.
+5. Click **Deploy**.
 
 ---
 
