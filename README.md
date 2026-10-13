@@ -1,14 +1,10 @@
 # WealthCalc India — Multi-Asset Investment Calculator
 
-[![Live Deployment](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://etf-calculator-pro.vercel.app)
-[![Live Demo](https://img.shields.io/badge/Live%20App-etf--calculator--pro.vercel.app-success?style=for-the-badge)](https://etf-calculator-pro.vercel.app)
 ![Next.js](https://img.shields.io/badge/Next.js-14.2.35-black?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3-38B2AC?style=for-the-badge&logo=tailwind-css)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb)
 ![NextAuth.js](https://img.shields.io/badge/NextAuth.js-4.24-purple?style=for-the-badge&logo=next.js)
-
-> 🚀 **Live Production App**: [**https://etf-calculator-pro.vercel.app**](https://etf-calculator-pro.vercel.app)
 
 A comprehensive, modern, and responsive multi-asset investment, debt, and wealth growth calculator built specifically for Indian retail investors and financial planners. Designed with Next.js 14 App Router, Tailwind CSS, Recharts, and MongoDB Atlas.
 
@@ -29,13 +25,11 @@ Traditional investment calculators are fragmented—investors often use one webs
 
 ---
 
-## 3. Live Demo
-
-🌐 **Live Application Link**: [**https://etf-calculator-pro.vercel.app**](https://etf-calculator-pro.vercel.app)
-
-- **Production URL**: `https://etf-calculator-pro.vercel.app`
-- **Preview Deployments**: `https://etf-calculator-pro-rhi7.vercel.app`
-- **Source Code**: [GitHub Repository](https://github.com/AkshayNedunuri/ETF-Calculator-Pro)
+## 3. Live Demo & Deployment
+ 
+ *(Deployment URL currently being updated. See the [Deployment](#deploying-to-vercel) section below to run locally or deploy to Vercel.)*
+ 
+ - **Source Code**: [GitHub Repository](https://github.com/AkshayNedunuri/ETF-calculator)
 
 ---
 
